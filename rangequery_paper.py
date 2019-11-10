@@ -14,12 +14,12 @@ def RangeQuery(ratingsTableName, ratingMinValue, ratingMaxValue, openconnection)
 
     for table in range_partitions:
         table_name = table[0]
-        cur.execute('select userid, movieid, rating from ' + str(table_name) + ' where rating >= ' + str(ratingMinValue) + ' and rating <= ' + str(ratingMaxValue))
+        cur.execute("select userid, rating from " + str(table_name) + " where userid >= '" + ratingMinValue + "' and userid <= '" + ratingMaxValue + "'")
         matches = cur.fetchall()
 
         for match in matches:
             partition = "RangeRatingsPart" + table_name[-1]
-            data.append(str(partition) + "," + str(match[0]) + "," + str(match[1]) + "," + str(match[2]))
+            data.append(str(partition) + "," + str(match[0]) + "," + str(match[1]))
     
     cur.close()
 
